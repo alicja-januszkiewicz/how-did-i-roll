@@ -13,12 +13,12 @@ out_dir = "docs"
 # resource (public) file folder
 asset_dir = "public"
 
-base_path = "how-did-i-roll"
-
 [web.app]
 
 # HTML title tag content
 title = "dioxus | ⛺"
+
+base_path = "how-did-i-roll"
 
 [web.watcher]
 
