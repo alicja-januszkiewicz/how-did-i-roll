@@ -22,9 +22,9 @@ fn app(cx: Scope) -> Element {
 
 #[derive(Clone, Routable, Debug, PartialEq)]
 enum Route {
-    #[route("/how-did-i-roll/")]
+    #[route("/")]
     Home {},
-    #[route("/how-did-i-roll/blog/:id")]
+    #[route("/blog/:id")]
     Blog { id: i32 },
 }
 
