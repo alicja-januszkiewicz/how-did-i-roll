@@ -1,9 +1,9 @@
 #![allow(non_snake_case)]
 
 use dioxus_router::prelude::*;
-
 use dioxus::prelude::*;
 use log::LevelFilter;
+use charming::{component::{Axis, Title}, element::AxisType, series::Line, Chart, WasmRenderer};
 
 fn main() {
     // Init debug
@@ -37,7 +37,7 @@ fn Blog(cx: Scope, id: i32) -> Element {
 }
 
 #[inline_props]
-fn Home(cx: Scope) -> Element {
+fn OldHome(cx: Scope) -> Element {
     let mut count = use_state(cx, || 0);
 
     cx.render(rsx! {
@@ -54,4 +54,38 @@ fn Home(cx: Scope) -> Element {
 
         }
     })
+}
+
+fn Home(cx: Scope) -> Element {
+
+    let renderer: WasmRenderer = WasmRenderer::new(600, 400);
+    use_future!(cx, || async move {
+      let chart = Chart::new()
+      .x_axis(
+          Axis::new()
+              .type_(AxisType::Category)
+              .data(vec!["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]),
+      )
+      .y_axis(Axis::new().type_(AxisType::Value))
+      .series(Line::new().data(vec![150, 230, 224, 218, 135, 147, 260]));
+
+      renderer.render("chart",&chart).unwrap();
+    });
+
+
+    cx.render(rsx! (
+        div {
+            style: "text-align: center;",
+            h1 { "🌗 Dioxus + Charming 🚀" }
+            h3 { "Frontend that scales." }
+            p { "Dioxus is a portable, performant, and ergonomic framework for building cross-platform user interfaces in Rust." }
+        }
+        div {
+          style: "width: 100%; text-align: center;",
+          div { 
+            id: "chart",
+            style: "display: inline-block;",
+          }
+        }
+    ))
 }

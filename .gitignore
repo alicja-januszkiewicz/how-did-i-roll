@@ -16,3 +16,5 @@ Cargo.lock
 
 # Private notes
 research.md
+
+/data*
